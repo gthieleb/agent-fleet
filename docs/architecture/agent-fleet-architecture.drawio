@@ -1,0 +1,145 @@
+<mxfile host="localhost">
+  <diagram id="d36dm3hw-gdnh" name="Page-1">
+    <mxGraphModel dx="2076" dy="922" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="shape=actor;fillColor=#F5F5F5;strokeColor=#666666;fontColor=#333333;fontSize=10;whiteSpace=wrap;html=1;" value="Nutzer" vertex="1">
+          <mxGeometry height="50" width="30" x="20" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="Frontend (SvelteKit SPA)&lt;br&gt;Inbox · Dashboard · Import" vertex="1">
+          <mxGeometry height="60" width="160" x="70" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="Authentik&lt;br&gt;OIDC-IdP · JWKS" vertex="1">
+          <mxGeometry height="60" width="120" x="260" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="Strimzi-Kafka&lt;br&gt;KRaft · single-node" vertex="1">
+          <mxGeometry height="60" width="150" x="540" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=1;fillColor=#EAF2FB;strokeColor=#2D6FAE;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#1F4E79;whiteSpace=wrap;html=1;" value="Control-Plane Backend (Bun/Hono)" vertex="1">
+          <mxGeometry height="200" width="330" x="70" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Auth" vertex="1">
+          <mxGeometry height="36" width="150" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Worker-Registry" vertex="1">
+          <mxGeometry height="36" width="150" x="170" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Dispatcher" vertex="1">
+          <mxGeometry height="36" width="150" x="10" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Event-Bridge" vertex="1">
+          <mxGeometry height="36" width="150" x="170" y="74" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Question-Router" vertex="1">
+          <mxGeometry height="36" width="150" x="10" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Reply-Service" vertex="1">
+          <mxGeometry height="36" width="150" x="170" y="118" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="MCP-Registrar" vertex="1">
+          <mxGeometry height="36" width="150" x="10" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="6" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=16;whiteSpace=wrap;html=1;" value="Import" vertex="1">
+          <mxGeometry height="36" width="150" x="170" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="shape=cylinder3;boundedCyl=1;backgroundOutline=1;size=10;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" value="CNPG-Postgres&lt;br&gt;Registry · Inbox · Audit" vertex="1">
+          <mxGeometry height="60" width="130" x="430" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="shape=cylinder3;boundedCyl=1;backgroundOutline=1;size=10;fillColor=#E08A7E;strokeColor=#B25B4E;fontColor=#FFFFFF;fontSize=13;fontStyle=1;whiteSpace=wrap;html=1;" value="Kafka-Topics (KafkaTopic-CRDs)&lt;br&gt;events · questions · answers · state (compact)" vertex="1">
+          <mxGeometry height="70" width="200" x="570" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="rounded=1;arcSize=8;fillColor=#A6A6A6;strokeColor=#7F7F7F;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="Terraform E2E&lt;br&gt;kind + podman&lt;br&gt;ingress-nginx" vertex="1">
+          <mxGeometry height="90" width="130" x="430" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="1" style="rounded=1;fillColor=#F2F8FD;strokeColor=#2D6FAE;dashed=1;verticalAlign=top;fontSize=14;fontStyle=1;fontColor=#1F4E79;whiteSpace=wrap;html=1;" value="Agent-Harness-Plugin-Schicht — harness-core (OpenCode ↔ DeepAgents/LangChain austauschbar)" vertex="1">
+          <mxGeometry height="100" width="490" x="70" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="19" parent="18" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=14;whiteSpace=wrap;html=1;" value="OpenCode-Worker 1&lt;br&gt;opencode serve 2.2.0 · SQLite/PVC" vertex="1">
+          <mxGeometry height="54" width="140" x="20" y="33" as="geometry" />
+        </mxCell>
+        <mxCell id="20" parent="18" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=14;whiteSpace=wrap;html=1;" value="OpenCode-Worker 2&lt;br&gt;opencode serve 2.2.0 · SQLite/PVC" vertex="1">
+          <mxGeometry height="54" width="140" x="175" y="33" as="geometry" />
+        </mxCell>
+        <mxCell id="21" parent="18" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=14;whiteSpace=wrap;html=1;" value="OpenCode-Worker N (StatefulSet ×N)&lt;br&gt;opencode serve 2.2.0 · SQLite/PVC" vertex="1">
+          <mxGeometry height="54" width="140" x="330" y="33" as="geometry" />
+        </mxCell>
+        <mxCell id="22" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="llmgateway-setup&lt;br&gt;LiteLLM/Bifrost · per-User virtual keys" vertex="1">
+          <mxGeometry height="55" width="165" x="70" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="23" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="LLM-Provider&lt;br&gt;(OpenAI, Anthropic, …)" vertex="1">
+          <mxGeometry height="55" width="165" x="70" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="24" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="sandbox-mcp-operator&lt;br&gt;SandboxMCP-CRDs · /mcp (streamable HTTP)" vertex="1">
+          <mxGeometry height="55" width="200" x="260" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="25" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="Agent Sandboxes&lt;br&gt;WarmPool · gVisor (kubernetes-sigs)" vertex="1">
+          <mxGeometry height="55" width="200" x="260" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="26" parent="1" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="GitHub Actions&lt;br&gt;CI/CD (Docker + OCI-Helm)" vertex="1">
+          <mxGeometry height="55" width="150" x="490" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="27" parent="1" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=13;whiteSpace=wrap;html=1;" value="ghcr.io&lt;br&gt;Docker-Images · OCI-Helm-Charts" vertex="1">
+          <mxGeometry height="55" width="150" x="490" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="28" parent="1" style="rounded=1;fillColor=#FAFAFA;strokeColor=#999999;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#333333;whiteSpace=wrap;html=1;" value="Legende" vertex="1">
+          <mxGeometry height="130" width="130" x="660" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="29" parent="28" style="rounded=1;arcSize=8;fillColor=#4A90D9;strokeColor=#2D6FAE;fontColor=#FFFFFF;fontStyle=1fontSize=12;fontStyle=0;whiteSpace=wrap;html=1;" value="Monorepo-Services" vertex="1">
+          <mxGeometry height="26" width="110" x="10" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="30" parent="28" style="rounded=1;arcSize=8;fillColor=#D9776B;strokeColor=#B25B4E;fontColor=#FFFFFF;fontStyle=1fontSize=12;fontStyle=0;whiteSpace=wrap;html=1;" value="Externe / Upstream" vertex="1">
+          <mxGeometry height="26" width="110" x="10" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="31" parent="28" style="rounded=1;arcSize=8;fillColor=#A6A6A6;strokeColor=#7F7F7F;fontColor=#FFFFFF;fontStyle=1fontSize=12;fontStyle=0;whiteSpace=wrap;html=1;" value="Plattform / Laufzeit" vertex="1">
+          <mxGeometry height="26" width="110" x="10" y="94" as="geometry" />
+        </mxCell>
+        <mxCell id="32" edge="1" parent="1" source="2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="3" value="HTTPS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="33" edge="1" parent="1" source="3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="6" value="REST / WS · OIDC · Inbox-Antworten">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="34" edge="1" parent="1" source="3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;html=1;" target="4" value="OIDC-PKCE">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="35" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.7;exitY=0;entryX=0.5;entryY=1;html=1;" target="4" value="JWT (JWKS)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="36" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=1;exitY=0.35;entryX=0;entryY=0.5;html=1;" target="15" value="SQL">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="37" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.95;exitY=0;entryX=0;entryY=0.5;html=1;" target="5" value="produce / consume">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="38" edge="1" parent="1" source="5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="16" value="KafkaTopic-CRDs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="39" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;startArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="18" value="Session-API · Replies ⇄ SSE-Events (harness-core)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="40" edge="1" parent="1" source="18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.15;exitY=1;entryX=0.5;entryY=0;html=1;" target="22" value="LLM-Egress · per-User-Key">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="41" edge="1" parent="1" source="22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="23" value="Inference">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42" edge="1" parent="1" source="6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=2;fontColor=#444444;fontSize=10;fontStyle=1;exitX=0.05;exitY=0.9;entryX=0.1;entryY=0;html=1;" target="24" value="SandboxMCP-CR get-or-create · PUT /api/experimental/mcp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="43" edge="1" parent="1" source="18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.85;exitY=1;entryX=0.5;entryY=0;html=1;" target="24" value="streamable HTTP /mcp (Bearer)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="44" edge="1" parent="1" source="24" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#5B7590;fontColor=#444444;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="25" value="WarmPool-Claim · gVisor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="45" edge="1" parent="1" source="17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=2;fontColor=#444444;fontSize=10;fontStyle=1;exitX=0;exitY=0.3;entryX=1;entryY=0.75;html=1;" target="6" value="terraform apply">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="46" edge="1" parent="1" source="26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#37474F;strokeWidth=2;fontColor=#444444;fontSize=10;fontStyle=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;html=1;" target="27" value="build &amp; push">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
