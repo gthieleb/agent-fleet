@@ -1,0 +1,16 @@
+---
+extends: default
+rules:
+  line-length:
+    max: 140
+  truthy: disable
+  document-start: disable
+  comments-indentation: disable
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+ignore: |
+  node_modules/
+  .superpowers/
+  .opencode/
+  docs/

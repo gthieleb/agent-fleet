@@ -1,0 +1,31 @@
+{
+  "files": {
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "*.json",
+      "*.jsonc",
+      "!node_modules",
+      "!docs",
+      "!.superpowers",
+      "!**/dist",
+      "!**/build",
+      "!**/.svelte-kit"
+    ]
+  },
+  "linter": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "asNeeded"
+    }
+  }
+}
