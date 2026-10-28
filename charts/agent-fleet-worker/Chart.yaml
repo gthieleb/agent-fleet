@@ -1,0 +1,9 @@
+apiVersion: v2
+name: agent-fleet-worker
+description: OpenCode 2.x worker (StatefulSet + PVC) for agent-fleet
+type: application
+version: 0.1.0
+appVersion: "2.2.0"
+home: https://github.com/gthieleb/agent-fleet
+sources:
+  - https://github.com/gthieleb/agent-fleet

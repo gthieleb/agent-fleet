@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.4"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pre-commit
+        run: pip install pre-commit==4.7.0
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: v4.3.1
+
+      - name: Install kubeconform and actionlint
+        run: |
+          KC_URL=https://github.com/yannh/kubeconform/releases/download/v0.8.0
+          AL_URL=https://github.com/rhysd/actionlint/releases/download/v1.7.12
+          curl -fsSL "$KC_URL/kubeconform-linux-amd64.tar.gz" | tar xz -C /usr/local/bin kubeconform
+          curl -fsSL "$AL_URL/actionlint_1.7.12_linux_amd64.tar.gz" | tar xz -C /usr/local/bin actionlint
+
+      - name: pre-commit
+        run: pre-commit run --all-files --show-diff-on-failure
+
+      - name: bun test
+        run: bun test
+
+      - name: Helm lint and schema validation
+        run: |
+          set -e
+          for chart in charts/*/; do
+            helm lint "$chart" --set opencodePassword.inline=ci
+          done
+          helm template ci charts/agent-fleet-worker \
+            --set opencodePassword.inline=ci \
+            | kubeconform -strict -summary -kubernetes-version 1.31.0
+
+      - name: actionlint
+        run: actionlint

@@ -1,0 +1,26 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "agent-fleet-worker.fullname" . }}
+  labels:
+    {{- include "agent-fleet-worker.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "agent-fleet-worker.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- toYaml .Values.networkPolicy.backendPodSelector | nindent 14 }}
+      ports:
+        - port: {{ .Values.service.port }}
+          protocol: TCP
+  egress:
+    # Workers need outbound traffic (LLM gateway, MCP endpoints, DNS).
+    - {}
+{{- end }}

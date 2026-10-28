@@ -1,0 +1,7 @@
+agent-fleet worker deployed.
+
+Worker API (headless): http://{{ include "agent-fleet-worker.fullname" . }}-headless:{{ .Values.service.port }}
+Service names: {{ include "agent-fleet-worker.fullname" . }}-headless-0..N
+
+The control-plane backend connects with Basic auth (username "opencode").
+Secret in use: {{ include "agent-fleet-worker.passwordSecretName" . }}

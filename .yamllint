@@ -14,3 +14,4 @@ ignore: |
   .superpowers/
   .opencode/
   docs/
+  charts/*/templates/*

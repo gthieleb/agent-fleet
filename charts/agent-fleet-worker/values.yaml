@@ -1,0 +1,44 @@
+image:
+  repository: ghcr.io/gthieleb/agent-fleet-worker
+  # default: .Chart.AppVersion (pinned 2.2.0 — never "latest": that tags V1)
+  tag: ""
+  pullPolicy: IfNotPresent
+
+replicas: 1
+
+opencodePassword:
+  # Reference an existing secret. When set, it wins over `inline`.
+  secretKeyRef:
+    name: ""
+    key: password
+  # Inline password (dev/E2E only). Creates a chart-managed secret when
+  # secretKeyRef.name is empty. Exactly one source must be provided.
+  inline: ""
+
+storage:
+  size: 5Gi
+  storageClass: ""
+
+service:
+  port: 4096
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+networkPolicy:
+  enabled: true
+  # Only pods with these labels may connect to the worker API.
+  backendPodSelector:
+    app.kubernetes.io/name: agent-fleet-backend
+
+podLabels: {}
+podAnnotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

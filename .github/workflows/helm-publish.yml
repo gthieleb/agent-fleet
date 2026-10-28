@@ -1,0 +1,32 @@
+name: helm-publish
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: v4.3.1
+
+      - name: Package and push charts to ghcr.io OCI
+        run: |
+          set -e
+          helm registry login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+          mkdir -p .charts-out
+          for chart in charts/*/; do
+            name=$(basename "$chart")
+            helm package "$chart" --destination .charts-out
+            helm push ".charts-out/${name}-"*.tgz "oci://ghcr.io/${{ github.repository_owner }}/charts"
+          done
