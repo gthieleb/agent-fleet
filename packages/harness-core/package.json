@@ -1,0 +1,16 @@
+{
+  "name": "@agent-fleet/harness-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@agent-fleet/fleet-schema": "workspace:*",
+    "zod": "^3.24"
+  }
+}

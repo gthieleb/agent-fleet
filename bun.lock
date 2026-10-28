@@ -28,6 +28,14 @@
         "drizzle-kit": "^0.31.11",
       },
     },
+    "packages/harness-core": {
+      "name": "@agent-fleet/harness-core",
+      "version": "0.1.0",
+      "dependencies": {
+        "@agent-fleet/fleet-schema": "workspace:*",
+        "zod": "^3.24",
+      },
+    },
   },
   "packages": {
     "@agent-fleet/control-plane": ["@agent-fleet/control-plane@workspace:apps/control-plane"],
@@ -35,6 +43,8 @@
     "@agent-fleet/fleet-schema": ["@agent-fleet/fleet-schema@workspace:packages/fleet-schema"],
 
     "@agent-fleet/frontend": ["@agent-fleet/frontend@workspace:apps/frontend"],
+
+    "@agent-fleet/harness-core": ["@agent-fleet/harness-core@workspace:packages/harness-core"],
 
     "@biomejs/biome": ["@biomejs/biome@2.6.3", "", { "optionalDependencies": { "@biomejs/cli-android-arm64": "2.6.3", "@biomejs/cli-android-x64": "2.6.3", "@biomejs/cli-darwin-arm64": "2.6.3", "@biomejs/cli-darwin-x64": "2.6.3", "@biomejs/cli-linux-arm64": "2.6.3", "@biomejs/cli-linux-arm64-musl": "2.6.3", "@biomejs/cli-linux-x64": "2.6.3", "@biomejs/cli-linux-x64-musl": "2.6.3", "@biomejs/cli-win32-arm64": "2.6.3", "@biomejs/cli-win32-x64": "2.6.3" }, "bin": { "biome": "bin/biome" } }, "sha512-va/0xPku7wnfzv+D8Zpdm5uKiGJWiV8neqoEPnRjvNQQwhl4tVXS4fETs4H0CCB2rGeqJ4cu9y4iOZOnOYKAUA=="],
 
