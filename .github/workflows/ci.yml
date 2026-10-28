@@ -40,7 +40,12 @@ jobs:
         run: pre-commit run --all-files --show-diff-on-failure
 
       - name: bun test
-        run: bun test
+        run: |
+          if find apps packages -name "*.test.ts" | grep -q .; then
+            bun test
+          else
+            echo "no test files yet (first tests land in Task 4) — skipping"
+          fi
 
       - name: Helm lint and schema validation
         run: |
