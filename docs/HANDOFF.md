@@ -48,17 +48,21 @@
 ## 5. Blocker & offene Punkte (WICHTIG)
 
 1. **KEIN podman/docker/kind auf dem Host** → E2E (Task 18/19) lokal nicht fahrbar. CI-Runner haben Container-Runtime → Pipelines laufen. Falls podman installiert wird (`apt install podman` oder rootless), lokale E2E-Validierung möglich.
-2. **Ollama-Monatslimit** (general-Subagenten) war offen — aktuelle Verfügbarkeit prüfen; sonst native Ausführung (wie Tasks 2–5 erfolgreich).
-3. **Playwright im Host** braucht User-space-Libs + Fonts (kein sudo): Pfad `/tmp/opencode/render/libs` mit `LD_LIBRARY_PATH` + `FONTCONFIG_FILE=/tmp/opencode/render/fonts.conf`; Chromium headless-shell heruntergeladen (`~/.cache/ms-playwright/`). Wird nur für draw.io-Rendering genutzt (nicht für Frontend-Tests!).
+2. **Kein `playwright`-MCP in der Session aktiv** (Config `enabled: false`) → nur relevant für Task 17b; User muss togglen. Task 17c (`@playwright/test`) braucht das MCP NICHT.
+3. **Ollama-Monatslimit** (general-Subagenten) war offen — aktuelle Verfügbarkeit prüfen; sonst native Ausführung (wie Tasks 2–5 erfolgreich).
+4. **Playwright im Host-Browser** (nur draw.io-Rendering, nicht Tests): User-space-Libs + Fonts unter `/tmp/opencode/render/libs` (`LD_LIBRARY_PATH` + `FONTCONFIG_FILE=/tmp/opencode/render/fonts.conf`), Chromium-headless-shell in `~/.cache/ms-playwright/`.
 
-## 6. PENDING-ENTSCHEIDUNG (vom User, siehe letzte Konversation)
+## 6. PENDING-ENTSCHEIDUNGEN (vom User, siehe letzte Konversation)
 
-Der User stellte die Frage, ob **Frontend-E2E-Tests mit Playwright** vorhanden sind. **Antwort: NEIN** — Frontend (SvelteKit) existiert noch nicht (Task 14–17), keine Playwright-Tests. Drei Optionen wurden dem User vorgelegt:
-1. **(Empfohlen)** Neues Task **17b „Frontend-E2E (Playwright, authenticated via DEV_TOKEN)"** zusätzlich aufnehmen.
-2. In Task 19 (API-E2E-Smoke) integrieren.
-3. Vorerst bei Vitest lassen.
+**A) Playwright/E2E-Strategie — GELÖST (2026-10-30, drei Stränge):**
+1. **17b — Playwright-MCP „Erfahrungen sammeln"**: interaktive UI-Sichtabnahme + Screenshots (DEV_TOKEN). Braucht `playwright`-MCP aktiv. **Nicht CI-fähig.**
+2. **17c — Frontend-E2E für die Pipeline via `@playwright/test`**: headless, deterministisch, GitHub-Actions (Artifact + `daun/playwright-report-summary`). Das ist die Runner-Library, NICHT das MCP.
+3. **19 — API-E2E-Smoke (Bun-Script)**: Backend-Flow deterministisch in kind/podman.
 
-→ **Beim Wiederaufnehmen ZUERST vom User entscheiden lassen** (und dann Plan editieren).
+**WICHTIG für die neue Session:** `playwright`-MCP ist in `~/.config/opencode/opencode.jsonc` **`enabled: false`**. MCP-First: **NIEMALS selbst aktivieren**, NIEMALS mit eigenen Skripten umgehen — User bitten, `/mcps` → `playwright` zu aktivieren (nur für 17b). Für 17c hingegen ist `@playwright/test` das richtige Pipeline-Werkzeug (MCP wäre dafür das falsche Tool).
+
+**B) TDD-Design pro Einzelpunkt — GELÖST:**
+Striktes Test-First für jeden einzelnen Punkt ist verpflichtend im Plan verankert (Header + Global Constraints Zeile 1). Neue Session beginnt jeden Task nach superpowers:test-driven-development: Test zuerst → rot sehen → minimaler Code → grün → Suite grün → refactor. Keine Ausnahme ohne User-Freigabe.
 
 ## 7. Nächster Schritt (sofern User nicht umordnet)
 

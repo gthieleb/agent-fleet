@@ -12,8 +12,17 @@
 
 **Execution Skill:** superpowers:executing-plans (Native — empfohlen: 19+1 Tasks mit festgelegten Interfaces, sequenzielle Abhängigkeiten) — Alternativ superpowers:subagent-driven-development.
 
+**Verpflichtendes TDD-Design (für JEDEN Task):** Jeder einzelne Schritt folgt strikt superpowers:test-driven-development. Eisenregel: **kein Produktionscode ohne zuerst fehlschlagenden Test**; jeder Test wurde rot gesehen, bevor der minimale Code ihn grün macht; REFACTOR nur bei grüner Suite. Keine Ausnahme (auch nicht „zu trivial"), ohne explizite User-Freigabe. Bei Verstoß: Code löschen, mit Test-first neu starten.
+
 ## Global Constraints
 
+- **TDD ist für jede Zeile Produktionscode Pflicht** (superpowers:test-driven-development): Test zuerst schreiben → rot sehen → minimaler Code → grün → Suite grün → refactor. Jeder Task erhält explizit RED/GREEN-Steps; ein Test, der sofort grün ist, prüft falsches Verhalten (fixen, nicht übergehen). Mocks nur wo unvermeidbar (external I/O: Kafka-Broker, K8s-API, OpenCode-HTTP, JWKS-IdP); Assertions auf echtes Verhalten, nie auf Mock-Verhalten (writing-good-tests.md).
+
+- **Zweistufige E2E (User-Entscheidung 2026-10-30, präzisiert):** Drei getrennte Stränge mit je passendem Werkzeug:
+  **(a) Task 17b — Frontend-UI-Sichtabnahme + Erfahrungssammlung über das `playwright`-MCP-Tool** (interaktiver Browser, DEV_TOKEN-auth, Sicht-/Screenshot-Prüfungen). Voraussetzung: `playwright`-MCP vom User aktiviert (Config `enabled: false`; MCP-First — niemals eigene Skripte, solange das Tool verfügbar ist). **Nicht CI-fähig.**
+  **(b) Task 17c — Frontend-E2E für die Pipeline via `@playwright/test`** (headless, deterministisch, `npx playwright test`, GitHub-Actions; Artifact-Report via `actions/upload-artifact` + `daun/playwright-report-summary`). Das ist die Runner-Library, NICHT das MCP-Tool — für CI das passende Werkzeug.
+  **(c) Task 19 — API-E2E-Smoke (Bun-Script)** (deterministischer Backend-Flow Session→Question→Reply→Import, kind/podman, GH Actions ohne Browser).
+  Screenshots/Evidenz nie ins Produktions-Repo (AGENTS.md Screenshot-Policy); `*.png` git-ignored bzw. `docs/evidence/` für lokale Ablage.
 - OpenCode-Server-Image: **`ghcr.io/anomalyco/opencode:2.2.0`** — V2, gepinnt; **nie `latest`** (zeigt auf V1 1.19.4). Health-Check assertet Server-Version `2.x`.
 - Client/Server synchron: `@opencode/client` in Version **2.2.x** pinnen (bun.lock).
 - Repo: **`gthieleb/agent-fleet`** (Monorepo: `apps/`, `packages/`, `charts/`, `infra/`, `e2e/`, `.github/workflows/`).
@@ -405,6 +414,47 @@ Sequenzielle Ausführung im frischen Repo (single working tree) — keine Parall
 - [ ] **Step 1: Dockerfile + Build + Smoke** — `curl localhost:8080` → 200 + `<div id="root">`.
 - [ ] **Step 2: Chart + Validierung** — `helm lint` + kubeconform PASS; Runtime-Config-Injection via ConfigMap geprüft.
 - [ ] **Step 3: Commit** — `feat(frontend): docker image and helm chart`.
+
+### Task 17b: Frontend-UI-Erfahrungssammlung via Playwright-MCP (User-Entscheidung 2026-10-30)
+
+**Files:**
+- Create: `e2e/ui/README.md` (Doku des Playwright-MCP-Verlaufs + Screenshot-Ablage-Konvention), `.gitignore`-Eintrag `docs/evidence/` für Screenshots (nie ins Produktions-Repo)
+- Test: **Playwright-MCP-Tool** (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_take_screenshot`) gegen die Task-18-Umgebung
+
+**Interfaces:**
+- Consumes: laufende E2E-Umgebung (Task 18), SvelteKit-Frontend (Tasks 14–17), Backend-DEV_TOKEN, **`playwright`-MCP (vom User aktiviert)**
+- Produces: UI-Abnahme-Report + Evidenz-Screenshots nach `docs/evidence/ui-<date>/` (optional Release-Asset, falls in Issue/PR verlinkt)
+
+**Ablauf (ein Nutzerfluss, Sichtprüfung je Schritt — dient explizit auch dem „Erfahrungen sammeln" mit dem MCP-Tool):**
+1. `browser_navigate` → Frontend-URL (`http://fleet.kind.localhost:8080`), Assert: Login-Titel sichtbar.
+2. Login (DEV_TOKEN-Pfad) → Redirect auf `/dashboard`, Snapshot: Session-Kacheln/Empty-State.
+3. `browser_click` → Session anlegen → Snapshot: neue Session sichtbar.
+4. Prompt → Permission-Ask (`bash → ask`) → Snapshot: Inbox `pending`.
+5. `browser_click` → Antwort `once` → Snapshot: Inbox `answered`, Session aktiv.
+6. Pro Schritt `browser_take_screenshot` → Evidenz; Abschluss-Report PASS/FAIL je Schritt.
+
+- [ ] **Step 1: Voraussetzung** — E2E up (Task 18), `playwright`-MCP aktiv (andernfalls STOP, User bitten zu aktivieren — keine eigenen Skripte).
+- [ ] **Step 2: Login-Sichtprüfung** — Navigieren, Snapshot Titel+Form, Screenshot.
+- [ ] **Step 3: Session-Flow** — Anlegen → Prompt → Snapshot Inbox `pending`.
+- [ ] **Step 4: Antwort-Flow** — Antworten → Snapshot Session aktiv, Screenshot.
+- [ ] **Step 5: Commit** — Evidenz + Doku `e2e/ui/README.md`; Screenshots nur `docs/evidence/` (git-ignored) oder Release-Asset.
+
+### Task 17c: Frontend-E2E für die Pipeline via @playwright/test
+
+**Files:**
+- Create: `apps/frontend/e2e/{login.spec.ts,session.spec.ts,inbox.spec.ts}`, `apps/frontend/playwright.config.ts` (webServer + baseURL `http://fleet.kind.localhost:8080`, projects `chromium`), `apps/frontend/package.json` (deps: `@playwright/test`)
+- Modify: `.github/workflows/ci.yml` — Job `frontend-e2e`: `bun install`, `npx playwright install --with-deps chromium`, `npx playwright test`, `actions/upload-artifact` (playwright-report) + `daun/playwright-report-summary@v3`
+- Test: `npx playwright test` (headless, deterministisch, DEV_TOKEN-auth via `page.setExtraHTTPHeaders`/`localStorage`)
+
+**Interfaces:**
+- Consumes: Frontend (Tasks 14–17), DEV_TOKEN, CI-Container-Runtime (Ubuntu-Runner)
+- Produces: deterministische UI-Regression fürs Pipeline: Login-Redirect, Session-Anlage, Inbox-Antwort; Report-Artifacts
+
+- [ ] **Step 1: Failing-Setup** — `playwright.config.ts` + erster Spec `login.spec.ts` (Assert Login-Titel); `npx playwright test` → rot (App nicht erreichbar ohne webServer/Umgebung) bzw. zunächst Spec-vor-Implementierung (TDD).
+- [ ] **Step 2: Specs implementieren** — login/session/inbox-Specs mit DEV_TOKEN-Handling.
+- [ ] **Step 3: Local-Run** — gegen Task-18-Umgebung grün; `npx playwright test` → PASS + Report.
+- [ ] **Step 4: CI-Job** — `ci.yml` um `frontend-e2e` erweitern, `actionlint` grün, Report-Artifacts konfiguriert.
+- [ ] **Step 5: Commit** — `feat(frontend): playwright e2e suite for pipeline + ci job`.
 
 ### Task 18: Terraform: kind-cluster + platform-stack Module
 
